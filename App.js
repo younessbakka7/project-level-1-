@@ -4,6 +4,11 @@ const port = 3000;
 
 const mongoose = require ("mongoose");
 
+app.use(express.urlencoded({extended:true}))
+
+const Mydata  = require("./modules/dataSchema")
+
+
 app.get('/',(req,res)=>{
     res.sendFile("./views/Home.html", {root : __dirname})
 
@@ -18,3 +23,23 @@ mongoose.connect("mongodb+srv://younessbenbakka14:2fKC14XueIPK5A1R@cluster0.u4jj
 }).catch((err)=>{
     console.log(err)
 })
+
+
+
+app.post('/',(req,res)=>{
+    const mydata = new Mydata(req.body);
+    mydata.save().then(()=>{
+        res.redirect("/index.html")
+    }).catch((err)=>{
+        console.log(err)
+    })
+  
+
+})
+
+
+       
+   
+
+
+
